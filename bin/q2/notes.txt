@@ -1,0 +1,52 @@
+Explain how the puzzle package works and how you use
+it to solve your JugPuzzle. Your explanation should convince
+us that you understand inheritance, interfaces as well as how
+the code in solve uses these to solve any puzzle which correctly
+uses the framework.
+
+First Impressions :
+
+The Move class is an Interface that must be implemented in order to define moves
+
+The Move object will be used by the Puzzle class in order to create all the possible NextStates objects (State of a Puzzle after a Move is executed) for a given Puzzle
+
+The State class constructs a State object which keeps track of a PreviousState object, a Move object and a Puzzle object. The Puzzle is the result of applying the Move to the PreviousState
+
+The States class creates an Array of State used to follow a path from a solved Puzzle to an initial Puzzle using PreviousStates and Move, in order to print out the Moves needed to solve the Puzzle
+
+Second Impressions :
+
+When Puzzle.solve is called, an empty States object is created as an empty Array of <State>. The solve algorithm updates the Array with the nextState by applying moves to the currentState and sets the previousState to be the currentState. The algorithm continues until one of the States is solved and then backtracks to the previousStates leading up to the solved state and print out the moves necessary to solve the puzzle.
+
+Final Impressions :
+
+	Tracing
+
+JugPuzzleSolver executes Puzzle.solve which calls the solve method of the Puzzle class 
+
+Puzzle.solve creates a variable previousStates and adds the Puzzle and the null Move to the previousStates
+
+Puzzle.solve executes a while loop. A for loop takes a State s from previousStates and checks if it is already solved. 
+
+If it is solved, printSolution is called on s which recursively calls the previousState and prints out the move leading to that state until the whole solution is printed.
+
+If it isn't solved, a variable nextStates is created and is assigned to a copy of PreviousState. Puzzle.nextStates is executed and the nextStates method is called. 
+
+The nextStates method takes a current state of Puzzle and executes all possible moves on it to create a new Puzzle. Both the new Puzzle and move leading up to the Puzzle are added to the States array. 
+
+The while loop continues until a solved state is selected, a solved state is created by nextStates or no solutions are found.
+
+	Idea 
+
+previousStates is State objects that contains a Puzzle, a Move and another previousState. 
+
+States is an array that contains State objects. 
+
+nextStates is a method that generates new State objects by performing all possible moves on the current Puzzle and adds the new State and Move to the States array.
+
+Solve is a method that keeps track of the previousState, loops through all current State in the States array and uses the nextStates method to generate new States and add them to the States array while also updating the previousState to new State. This algorithm essentially finds a solution using brute-force : try every possible moves on every possible Puzzle state until a solution is found or the puzzle is unsolvable.
+
+printSolution is the method that is called once the Puzzle is solved and recursively goes back to the original State using the previousState attributes. Once the original state is found, all moved leading up to the solved state are printed in succession to print out the entire solution to the Puzzle. 
+
+
+
